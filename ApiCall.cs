@@ -1,6 +1,5 @@
 using System.Text;
 using System.Text.Json;
-using Student_Enroll_Console.Model;
 
 namespace Student_Enroll_Console
 {
@@ -27,7 +26,7 @@ namespace Student_Enroll_Console
             }
         }
 
-        public async Task GetAllDataAsync(string endpoint)
+        public async Task<string?> GetAllDataAsync(string endpoint)
         {
             using(HttpClient client = new HttpClient())
             {
@@ -36,21 +35,18 @@ namespace Student_Enroll_Console
                 if(response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    List<NewStudent>? data = JsonSerializer.Deserialize<List<NewStudent>>(result);
-                    foreach(var student in data)
-                    {
-                        Console.WriteLine($"Code: {student.code}\tName: {student.name}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tSex: {student.sex}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
-                    }
+                    return result;
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
                 }
+                return null;
             }
         }
 
-        public async Task GetDataAsync(string endpoint, int id)
+        public async Task<string?> GetDataAsync(string endpoint, int id)
         {
             using(HttpClient client = new HttpClient())
             {
@@ -59,14 +55,14 @@ namespace Student_Enroll_Console
                 if(response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    NewStudent? student = JsonSerializer.Deserialize<NewStudent>(result);
-                    Console.WriteLine($"Code: {student.code}\tName: {student.name}\tSex: {student.sex}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
+                    return result;
                 }
                 else
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
                 }
+                return null;
             }
         }
 

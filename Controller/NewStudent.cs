@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Student_Enroll_Console.Model;
 
 namespace Student_Enroll_Console.Controller
@@ -12,10 +13,17 @@ namespace Student_Enroll_Console.Controller
             await api.PostData(baseUri+"api/NewStudent",newStudent);
         }
         public async Task GetAllNewStudent(){
-            await api.GetAllDataAsync(baseUri+"api/NewStudent");
+            var result = await api.GetAllDataAsync(baseUri+"api/NewStudent");
+            List<NewStudent>? data = JsonSerializer.Deserialize<List<NewStudent>>(result);
+            foreach(var student in data)
+            {
+                Console.WriteLine($"Code: {student.code}\tName: {student.name}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tSex: {student.sex}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
+            }
         }
         public async Task GetNewStudent(int id){
-            await api.GetDataAsync(baseUri+"api/NewStudent",id);
+            var result = await api.GetDataAsync(baseUri+"api/NewStudent",id);
+            NewStudent? student = JsonSerializer.Deserialize<NewStudent>(result);
+            Console.WriteLine($"Code: {student.code}\tName: {student.name}\tSex: {student.sex}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
         }
         public async Task UpdateNewStudent(NewStudent newStudent){
             await api.PutDataAsync(baseUri+"api/NewStudent",newStudent);
