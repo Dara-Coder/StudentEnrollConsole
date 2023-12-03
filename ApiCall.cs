@@ -1,82 +1,90 @@
 using System.Text;
 using System.Text.Json;
+using Student_Enroll_Console.Model;
 
 namespace Student_Enroll_Console
 {
     public class ApiCall
     {
-        private HttpClient _client;
-
-        public ApiCall()
-        {
-            _client = new HttpClient();
-        }
-
         public async Task PostData(string endpoint, object data)
         {
-            var url = new Uri(endpoint);
-            var dataJson = JsonSerializer.Serialize(data);
-            var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
-
-            var response = await _client.PostAsync(url, content);
-
-            if(response.IsSuccessStatusCode)
+            using(HttpClient client = new HttpClient())
             {
-                string result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("POST request successful. Response: " + result);
-            }
-            else
-            {
-                Console.WriteLine("POST request failed");
+                var json = JsonSerializer.Serialize(data);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await client.PostAsync(endpoint,content);
+
+                if(response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Created Successfully!");
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
+                }
             }
         }
 
-        public async Task GetData(string endpoint)
+        public async Task GetAllDataAsync(string endpoint)
         {
-            var response = await _client.GetAsync(endpoint);
-
-            if (response.IsSuccessStatusCode)
+            using(HttpClient client = new HttpClient())
             {
-                string result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("GET request successful. Response: " + result);
-            }
-            else
-            {
-                Console.WriteLine("GET request failed");
-            }
-        }
+                var response = await client.GetAsync(endpoint);
 
-        public async Task PutData(string endpoint, object data)
-        {
-            var dataJson = JsonSerializer.Serialize(data);
-            var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
-
-            var response = await _client.PutAsync(endpoint, content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("PUT request successful. Response: " + result);
-            }
-            else
-            {
-                Console.WriteLine("PUT request failed");
+                if(response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    List<NewStudent>? data = JsonSerializer.Deserialize<List<NewStudent>>(result);
+                    foreach(var student in data)
+                    {
+                        Console.WriteLine($"Code: {student.code}\tName: {student.name}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tSex: {student.sex}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
+                    }
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
+                }
             }
         }
 
-        public async Task DeleteData(string endpoint)
-        {
-            var response = await _client.DeleteAsync(endpoint);
+        public async Task GetDataAsync(string endpoint, int id)
+        {}
 
-            if (response.IsSuccessStatusCode)
-            {
-                string result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("DELETE request successful. Response: " + result);
-            }
-            else
-            {
-                Console.WriteLine("DELETE request failed");
-            }
-        }
+        // public async Task PutData(string endpoint, object data)
+        // {
+        //     try
+        //     {
+        //         var request = new HttpRequestMessage(HttpMethod.Put, endpoint);
+        //         var json = JsonSerializer.Serialize(data);
+        //         Console.WriteLine(json);
+        //         HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+        //         request.Content = content;
+        //         var response = await _client.SendAsync(request);
+        //         response.EnsureSuccessStatusCode();
+        //         Console.WriteLine(await response.Content.ReadAsStringAsync());
+        //     }
+        //     catch(Exception ex)
+        //     {
+        //         Console.WriteLine(ex.Message);
+        //     }
+        // }
+
+        // public async Task DeleteData(string endpoint)
+        // {
+        //     var response = await _client.DeleteAsync(endpoint);
+
+        //     if (response.IsSuccessStatusCode)
+        //     {
+        //         string result = await response.Content.ReadAsStringAsync();
+        //         Console.WriteLine("DELETE request successful. Response: " + result);
+        //     }
+        //     else
+        //     {
+        //         Console.WriteLine("DELETE request failed");
+        //     }
+        // }
     }
 }
