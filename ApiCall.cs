@@ -51,40 +51,61 @@ namespace Student_Enroll_Console
         }
 
         public async Task GetDataAsync(string endpoint, int id)
-        {}
+        {
+            using(HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync($"{endpoint}/{id}");
 
-        // public async Task PutData(string endpoint, object data)
-        // {
-        //     try
-        //     {
-        //         var request = new HttpRequestMessage(HttpMethod.Put, endpoint);
-        //         var json = JsonSerializer.Serialize(data);
-        //         Console.WriteLine(json);
-        //         HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-        //         request.Content = content;
-        //         var response = await _client.SendAsync(request);
-        //         response.EnsureSuccessStatusCode();
-        //         Console.WriteLine(await response.Content.ReadAsStringAsync());
-        //     }
-        //     catch(Exception ex)
-        //     {
-        //         Console.WriteLine(ex.Message);
-        //     }
-        // }
+                if(response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    NewStudent? student = JsonSerializer.Deserialize<NewStudent>(result);
+                    Console.WriteLine($"Code: {student.code}\tName: {student.name}\tSex: {student.sex}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+        }
 
-        // public async Task DeleteData(string endpoint)
-        // {
-        //     var response = await _client.DeleteAsync(endpoint);
+        public async Task PutDataAsync(string endpoint, object data)
+        {
+            using(HttpClient client = new HttpClient())
+            {
+                var json = JsonSerializer.Serialize(data);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PutAsync(endpoint,content);
 
-        //     if (response.IsSuccessStatusCode)
-        //     {
-        //         string result = await response.Content.ReadAsStringAsync();
-        //         Console.WriteLine("DELETE request successful. Response: " + result);
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine("DELETE request failed");
-        //     }
-        // }
+                if(response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Updated Successfully!");
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+        }
+
+        public async Task DeleteDataAsync(string endpoint,int id)
+        {
+            using(HttpClient client = new HttpClient())
+            {
+                var response = await client.DeleteAsync($"{endpoint}/{id}");
+
+                if(response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Deleted Successfully!");
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
+                }
+            }
+        }
     }
 }

@@ -36,8 +36,28 @@ namespace Student_Enroll_Console.FunctionList
                     break;
                 case 3:
                     Console.Write("Input your student ID: ");
-                    int id = Convert.ToInt32(Console.ReadLine());
-                    await studentController.GetNewStudent(id);
+                    int idGet = Convert.ToInt32(Console.ReadLine());
+                    await studentController.GetNewStudent(idGet);
+                    break;
+                case 4:
+                    Console.Write("Input Student ID: ");
+                    newStudent.id = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Input Student Code: ");
+                    newStudent.code = Console.ReadLine();
+                    Console.Write("Input Student Name: ");
+                    newStudent.name = Console.ReadLine();
+                    Console.Write("Input Student Sex: ");
+                    newStudent.sex = Console.ReadLine();
+                    Console.Write("Input Student Date Of Birth: ");
+                    newStudent.date_of_birth = DateTime.Parse(Console.ReadLine());
+                    Console.Write("Input Student Phone Number: ");
+                    newStudent.phone_number = Console.ReadLine();
+                    await studentController.UpdateNewStudent(newStudent);
+                    break;
+                case 5:
+                    Console.Write("Input Student ID: ");
+                    int idDelete = Convert.ToInt32(Console.ReadLine());
+                    await studentController.DeleteNewStudent(idDelete);
                     break;
                 default:
                     break;

@@ -17,7 +17,11 @@ namespace Student_Enroll_Console.Controller
         public async Task GetNewStudent(int id){
             await api.GetDataAsync(baseUri+"api/NewStudent",id);
         }
-        public void UpdateNewStudent(NewStudent newStudent){}
-        public void DeleteNewStudent(int id){}
+        public async Task UpdateNewStudent(NewStudent newStudent){
+            await api.PutDataAsync(baseUri+"api/NewStudent",newStudent);
+        }
+        public async Task DeleteNewStudent(int id){
+            await api.DeleteDataAsync(baseUri+"api/NewStudent",id);
+        }
     }
 }
