@@ -10,7 +10,7 @@ namespace Student_Enroll_Console.Controller
         public async Task SetNewStudentAsync(NewStudent newStudent){
             newStudent.created_at = DateTime.Now;
             newStudent.updated_at = DateTime.Now;
-            await api.PostData(baseUri+"api/NewStudent",newStudent);
+            await api.PostDataAsync(baseUri+"api/NewStudent",newStudent);
         }
         public async Task GetAllNewStudent(){
             var result = await api.GetAllDataAsync(baseUri+"api/NewStudent");

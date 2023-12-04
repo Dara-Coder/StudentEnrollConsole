@@ -18,6 +18,9 @@ namespace Student_Enroll_Console
                 case 1 :
                     await new OptionsNewStudent().SeletionNewStudent();
                     break;
+                case 3:
+                    await new OptionsSection().SeletionSection();
+                    break;
                 case 4:
                     await new OptionsSubject().SeletionSubject();
                     break;

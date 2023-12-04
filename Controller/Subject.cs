@@ -11,7 +11,7 @@ namespace Student_Enroll_Console.Controller
         {
             subject.created_at = DateTime.Now;
             subject.updated_at = DateTime.Now;
-            await api.PostData(baseUri+"api/Subject",subject);
+            await api.PostDataAsync(baseUri+"api/Subject",subject);
         }
 
         public async Task GetAllSubjectAsync()

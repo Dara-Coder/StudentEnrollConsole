@@ -5,7 +5,7 @@ namespace Student_Enroll_Console
 {
     public class ApiCall
     {
-        public async Task PostData(string endpoint, object data)
+        public async Task PostDataAsync(string endpoint, object data)
         {
             using(HttpClient client = new HttpClient())
             {
