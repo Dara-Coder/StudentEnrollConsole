@@ -20,16 +20,37 @@ namespace Student_Enroll_Console.FunctionList
             switch(purpose)
             {
                 case 1:
-                    Console.Write("\n1. Input Subject Code: ");
+                    Console.Write("\nInput Subject Code: ");
                     subject.code = Console.ReadLine();
-                    Console.Write("2. Input Subject Name: ");
+                    Console.Write("Input Subject Name: ");
                     subject.name = Console.ReadLine();
-                    Console.Write("3. Input Subject Fee: ");
+                    Console.Write("Input Subject Fee: ");
                     subject.fee = (float)Convert.ToDecimal(Console.ReadLine());
                     await subjectController.SetSubjectAsync(subject);
                     break;
                 case 2:
                     await subjectController.GetAllSubjectAsync();
+                    break;
+                case 3:
+                    Console.Write("\nInput Subject ID: ");
+                    int subjectId = Convert.ToInt32(Console.ReadLine());
+                    await subjectController.GetSubjectAsync(subjectId);
+                    break;
+                case 4:
+                    Console.Write("\nInput Subject ID: ");
+                    subject.id = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Input Subject Code: ");
+                    subject.code = Console.ReadLine();
+                    Console.Write("Input Subject Name: ");
+                    subject.name = Console.ReadLine();
+                    Console.Write("Input Subject Fee: ");
+                    subject.fee = (float)Convert.ToDecimal(Console.ReadLine());
+                    await subjectController.UpdateSubjectAsync(subject);
+                    break;
+                case 5:
+                    Console.Write("\nInput Subject ID: ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    await subjectController.DeleteSubjectAsync(id);
                     break;
                 case 6:
                     Console.Clear();
