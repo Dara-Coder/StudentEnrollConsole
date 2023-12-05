@@ -28,6 +28,26 @@ namespace Student_Enroll_Console.FunctionList
                     enrollStudent.sectionId = Convert.ToInt32(Console.ReadLine());
                     await enrollStudentController.SetEnrollStudent(enrollStudent);
                     break;
+                case 2:
+                    Console.WriteLine();
+                    await enrollStudentController.GetAllEnrollStudent();
+                    break;
+                case 3:
+                    Console.Write("\nInput Enroll ID: ");
+                    int enrollId = Convert.ToInt32(Console.ReadLine());
+                    await enrollStudentController.GetEnrollStudent(enrollId);
+                    break;
+                case 4:
+                    Console.Write("\nInput Enroll ID: ");
+                    enrollStudent.id = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Input Student ID: ");
+                    enrollStudent.newStudentId = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Input Subject ID: ");
+                    enrollStudent.subjectId = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Input Section ID: ");
+                    enrollStudent.sectionId = Convert.ToInt32(Console.ReadLine());
+                    await enrollStudentController.UpdateEnrollStudent(enrollStudent);
+                    break;
                 case 6:
                     Console.Clear();
                     await new OptionsMenu().OptionsMenuList();
