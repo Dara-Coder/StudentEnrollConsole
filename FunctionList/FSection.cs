@@ -51,6 +51,11 @@ namespace Student_Enroll_Console.FunctionList
                     section.checkout_time = TimeSpan.Parse(Console.ReadLine());
                     await sectionController.UpdateSectionAsync(section);
                     break;
+                case 5:
+                    Console.Write("\nInput Section ID: ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+                    await sectionController.DeleteSectionAsync(id);
+                    break;
                 case 6:
                     Console.Clear();
                     await new OptionsMenu().OptionsMenuList();

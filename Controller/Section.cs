@@ -33,5 +33,10 @@ namespace Student_Enroll_Console.Controller
         {
             await api.PutDataAsync(baseUri+"api/Section",section);
         }
+
+        public async Task DeleteSectionAsync(int id)
+        {
+            await api.DeleteDataAsync(baseUri+"api/Section",id);
+        }
     }
 }
