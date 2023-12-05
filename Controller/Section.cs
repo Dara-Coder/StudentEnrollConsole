@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Student_Enroll_Console.Model;
 
 namespace Student_Enroll_Console.Controller
@@ -14,6 +15,23 @@ namespace Student_Enroll_Console.Controller
         public async Task GetAllSectionAsync()
         {
             var result = await api.GetAllDataAsync(baseUri+"api/Section");
+            List<Section>? data = JsonSerializer.Deserialize<List<Section>>(result);
+            foreach(var section in data)
+            {
+                Console.WriteLine($"Code: {section.code}\tName: {section.name}\tCheckin Time: {section.checkin_time}\tCheckout Time: {section.checkout_time}");
+            }
+        }
+
+        public async Task GetSectionAsync(int id)
+        {
+            var result = await api.GetDataAsync(baseUri+"api/Section",id);
+            Section? section = JsonSerializer.Deserialize<Section>(result);
+            Console.WriteLine($"Code: {section.code}\tName: {section.name}\tCheckin Time: {section.checkin_time}\tCheckout Time: {section.checkout_time}");
+        }
+
+        public async Task UpdateSectionAsync(Section section)
+        {
+            await api.PutDataAsync(baseUri+"api/Section",section);
         }
     }
 }

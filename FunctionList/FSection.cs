@@ -15,6 +15,7 @@ namespace Student_Enroll_Console.FunctionList
             Console.WriteLine("4. Update Section");
             Console.WriteLine("5. Delete Section");
             Console.WriteLine("6. Exit");
+            Console.Write("Choose an option: ");
             int purpose = Convert.ToInt32(Console.ReadLine());
             switch(purpose)
             {
@@ -31,6 +32,24 @@ namespace Student_Enroll_Console.FunctionList
                     break;
                 case 2:
                     await sectionController.GetAllSectionAsync();
+                    break;
+                case 3:
+                    Console.Write("\nInput Section ID: ");
+                    int sectionId = Convert.ToInt32(Console.ReadLine());
+                    await sectionController.GetSectionAsync(sectionId);
+                    break;
+                case 4:
+                    Console.Write("\nInput Section ID: ");
+                    section.id = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Input Section Code: ");
+                    section.code = Console.ReadLine();
+                    Console.Write("Input Section Name: ");
+                    section.name = Console.ReadLine();
+                    Console.Write("Input Section Checkin Time: ");
+                    section.checkin_time = TimeSpan.Parse(Console.ReadLine());
+                    Console.Write("Input Section Checkout Time: ");
+                    section.checkout_time = TimeSpan.Parse(Console.ReadLine());
+                    await sectionController.UpdateSectionAsync(section);
                     break;
                 case 6:
                     Console.Clear();
