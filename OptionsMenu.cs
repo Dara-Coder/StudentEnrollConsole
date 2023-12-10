@@ -11,6 +11,7 @@ namespace Student_Enroll_Console
             Console.WriteLine("2. Enroll Student");
             Console.WriteLine("3. Section");
             Console.WriteLine("4. Subject");
+            Console.WriteLine("5. Exit");
             Console.Write("Choose an options: ");
             int purpose = Convert.ToInt32(Console.ReadLine());
             switch(purpose)
@@ -26,6 +27,10 @@ namespace Student_Enroll_Console
                     break;
                 case 4:
                     await new OptionsSubject().SeletionSubject();
+                    break;
+                case 5:
+                    Console.Clear();
+                    Environment.Exit(0);
                     break;
                 default:
                     break;

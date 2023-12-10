@@ -18,7 +18,7 @@ namespace Student_Enroll_Console.Controller
             List<Section>? data = JsonSerializer.Deserialize<List<Section>>(result);
             foreach(var section in data)
             {
-                Console.WriteLine($"Code: {section.code}\tName: {section.name}\tCheckin Time: {section.checkin_time}\tCheckout Time: {section.checkout_time}");
+                Console.WriteLine($"ID: {section.id}\tCode: {section.code}\tName: {section.name}\tCheckin Time: {section.checkin_time}\tCheckout Time: {section.checkout_time}");
             }
         }
 
@@ -26,7 +26,7 @@ namespace Student_Enroll_Console.Controller
         {
             var result = await api.GetDataAsync(baseUri+"api/Section",id);
             Section? section = JsonSerializer.Deserialize<Section>(result);
-            Console.WriteLine($"Code: {section.code}\tName: {section.name}\tCheckin Time: {section.checkin_time}\tCheckout Time: {section.checkout_time}");
+            Console.WriteLine($"ID: {section.id}\tCode: {section.code}\tName: {section.name}\tCheckin Time: {section.checkin_time}\tCheckout Time: {section.checkout_time}");
         }
 
         public async Task UpdateSectionAsync(Section section)

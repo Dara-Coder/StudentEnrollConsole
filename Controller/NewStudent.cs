@@ -17,13 +17,13 @@ namespace Student_Enroll_Console.Controller
             List<NewStudent>? data = JsonSerializer.Deserialize<List<NewStudent>>(result);
             foreach(var student in data)
             {
-                Console.WriteLine($"Code: {student.code}\tName: {student.name}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tSex: {student.sex}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
+                Console.WriteLine($"ID: {student.id}\tCode: {student.code}\tName: {student.name}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tSex: {student.sex}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
             }
         }
         public async Task GetNewStudent(int id){
             var result = await api.GetDataAsync(baseUri+"api/NewStudent",id);
             NewStudent? student = JsonSerializer.Deserialize<NewStudent>(result);
-            Console.WriteLine($"Code: {student.code}\tName: {student.name}\tSex: {student.sex}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
+            Console.WriteLine($"ID: {student.id}\tCode: {student.code}\tName: {student.name}\tSex: {student.sex}\tDate Of Birth: {student.date_of_birth.ToString().Split(" ")[0]}\tPhone Number: {student.phone_number}\tUpdate At: {student.updated_at}");
         }
         public async Task UpdateNewStudent(NewStudent newStudent){
             await api.PutDataAsync(baseUri+"api/NewStudent",newStudent);

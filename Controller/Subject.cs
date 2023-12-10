@@ -20,7 +20,7 @@ namespace Student_Enroll_Console.Controller
             List<Subject>? data = JsonSerializer.Deserialize<List<Subject>>(result);
             foreach(var subject in data)
             {
-                Console.WriteLine($"Code: {subject.code}\tName: {subject.name}\tFee: {subject.fee}\tUpdate At: {subject.updated_at}");
+                Console.WriteLine($"ID: {subject.id}\tCode: {subject.code}\tName: {subject.name}\tFee: {subject.fee}\tUpdate At: {subject.updated_at}");
             }
         }
 
@@ -28,7 +28,7 @@ namespace Student_Enroll_Console.Controller
         {
             var result = await api.GetDataAsync(baseUri+"api/Subject",id);
             Subject? subject = JsonSerializer.Deserialize<Subject>(result);
-            Console.WriteLine($"Code: {subject.code}\tName: {subject.name}\tFee: {subject.fee}\tUpdate At: {subject.updated_at}");
+            Console.WriteLine($"ID: {subject.id}\tCode: {subject.code}\tName: {subject.name}\tFee: {subject.fee}\tUpdate At: {subject.updated_at}");
         }
 
         public async Task UpdateSubjectAsync(Subject subject)
