@@ -1,3 +1,5 @@
+using Student_Enroll_Console.Model;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -20,8 +22,8 @@ namespace Student_Enroll_Console
                 }
                 else
                 {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
+                    var errorContent = await response.Content.ReadFromJsonAsync<Error>();
+                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent.error_message.errors[0].errorMessage}");
                 }
             }
         }
